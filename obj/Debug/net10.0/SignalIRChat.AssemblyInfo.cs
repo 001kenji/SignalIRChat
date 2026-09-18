@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SignalIRChat")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ec8db2b04f0b353d88656042f414d94c1c86f0c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SignalIRChat")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SignalIRChat")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
