@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SignalIRChat</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SignalIRChat.styles.css" asp-append-version="true" />
+    <!-- Font Awesome (optional, if not already in site.css) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        /* ---------- global refinements ---------- */
+        html, body {
+            height: 100%;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            background: #f4f6fb;
+            color: #1f2a44;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            letter-spacing: 0.01em;
+        }
+        /* subtle background gradient */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 10% 20%, rgba(59, 124, 255, 0.06), transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(27, 158, 92, 0.05), transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ---------- navbar ---------- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(200, 210, 230, 0.5) !important;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.03);
+            padding: 0.75rem 0;
+            margin-bottom: 2rem !important;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.35rem;
+            letter-spacing: -0.02em;
+            color: #1a2639 !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .navbar-brand::before {
+            content: "\f086"; /* comment icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #3b7cff;
+            font-size: 1.4rem;
+            transition: transform 0.2s;
+        }
+        .navbar-brand:hover::before {
+            transform: scale(1.08) rotate(-4deg);
+        }
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: #3d4c66 !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.6rem;
+            transition: background 0.15s, color 0.15s;
+            position: relative;
+        }
+        .navbar-nav .nav-link:hover {
+            background: #eef3fd;
+            color: #1f3a8a !important;
+        }
+        .navbar-nav .nav-link.active {
+            background: #e5edfe;
+            color: #1a4ad0 !important;
+            font-weight: 600;
+        }
+        /* underline indicator for active link (optional) */
+        .navbar-nav .nav-link.active::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            left: 1rem;
+            right: 1rem;
+            height: 2px;
+            background: #3b7cff;
+            border-radius: 2px;
+        }
+
+        /* ---------- main content ---------- */
+        .container {
+            flex: 1 0 auto;
+            max-width: 960px;
+        }
+        main {
+            padding-bottom: 2.5rem;
+            animation: fadeInUp 0.35s ease-out;
+        }
+        @@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+        /* ---------- footer ---------- */
+        .footer {
+            flex-shrink: 0;
+            background: transparent;
+            border-top: 1px solid rgba(200, 210, 230, 0.6) !important;
+            color: #6a7a96 !important;
+            padding: 1.2rem 0;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+        .footer a {
+            color: #3b7cff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+        .footer a:hover {
+            color: #1a4ad0;
+            text-decoration: underline;
+        }
+
+        /* ---------- utility tweaks ---------- */
+        .box-shadow {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05) !important;
+        }
+        /* smooth scrollbar for webkit */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #eef1f8; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c2cee0; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a7b6cf; }
+
+        /* focus styles for accessibility */
+        a:focus-visible, button:focus-visible, input:focus-visible {
+            outline: 3px solid rgba(59, 124, 255, 0.4);
+            outline-offset: 2px;
+            border-radius: 0.4rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SignalIRChat</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                <i class="fas fa-shield-alt me-1"></i> Privacy
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- optional: chat link could go here -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Index">
+                                <i class="fas fa-comments me-1"></i> Chat
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <span>&copy; 2026 - SignalIRChat</span>
+            <span>
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                    <i class="fas fa-lock me-1"></i> Privacy
+                </a>
+            </span>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
